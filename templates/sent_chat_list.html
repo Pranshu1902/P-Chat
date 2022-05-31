@@ -1,0 +1,10 @@
+{% extends "base.html" %} {% block head %} View {% endblock %} {% block main %}
+<div class="ml-24">
+  {% for chat in chats %}
+  <p class="font-semibold text-xl text-red-600">
+    <a href="/chat/{{chat.id}}"> {{forloop.counter}}: {{chat.sent_to}} </a>
+  </p>
+  <br />
+  {% endfor %}
+</div>
+{% endblock %}

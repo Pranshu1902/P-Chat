@@ -1,0 +1,10 @@
+{% extends "base.html" %} {% block head %} View {% endblock %} {% block main %}
+<div class="ml-24">
+  {% for chat in chats %}
+  <p class="font-semibold text-xl text-green-600">
+    {{chat.text}}, {{chat.sent_from}} {{chat.sent_to}}
+  </p>
+  <br />
+  {% endfor %}
+</div>
+{% endblock %}

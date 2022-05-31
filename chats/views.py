@@ -57,3 +57,23 @@ class ViewChat(LoginRequiredMixin, ListView):
     queryset = Chat.objects.all()
     template_name = 'view_chat.html'
     context_object_name = "chats"
+
+    def get_queryset(self):
+        return Chat.objects.filter(sent_from=self.request.user)# | sent_to = self.request.user)
+
+class ViewSentChatList(LoginRequiredMixin, ListView):
+    queryset = Chat.objects.all()
+    template_name = 'sent_chat_list.html'
+    context_object_name = "chats"
+
+    def get_queryset(self):
+        return Chat.objects.filter(sent_from=self.request.user)# | sent_to = self.request.user)
+
+class ViewPersonalChats(LoginRequiredMixin, ListView):
+    queryset = Chat.objects.all()
+    template_name = 'personal_chat.html'
+    context_object_name = "chats"
+
+    def get_queryset(self):
+        allSent = Chat.objects.filter(sent_from=self.request.user)
+        return allSent.filter(sent_to__id=self.request.resolver_match.kwargs['pk'])
