@@ -18,6 +18,14 @@ from django.urls import path
 from django.contrib.auth.views import LogoutView
 from chats.views import *
 
+from chats.apiviews import *
+
+from rest_framework.routers import SimpleRouter
+
+router = SimpleRouter(trailing_slash=True)
+
+router.register("api", ChatViewSet, basename="chats")
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("send/", CreateChat.as_view()),
@@ -25,4 +33,7 @@ urlpatterns = [
     path("login/", UserLoginView.as_view()),
     path("logout/", LogoutView.as_view()),
     path("signup/", UserSignupView.as_view()),
-]
+    path("chat_list/", ViewSentChatList.as_view()),
+    path("chat/<pk>", ViewPersonalChats.as_view()),
+    #path("api", ChatListAPI.as_view()),
+] + router.urls
