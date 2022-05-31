@@ -38,7 +38,13 @@ class CreateChat(LoginRequiredMixin, CreateView):
     form_class = ChatForm
     template_name = 'create_chat.html'
     success_url = '/view'
-    context_object_name = 'chats'
+
+    # function to get the current user's details
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.request.user
+        context["sender"] = user
+        return context
 
     def form_valid(self, form):
         form.save()
