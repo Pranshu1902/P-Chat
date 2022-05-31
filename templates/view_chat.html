@@ -1,0 +1,8 @@
+{% extends "base.html" %} {% block head %} View {% endblock %} {% block main %}
+{% for chat in chats %}
+<p class="font-bold text-2xl">{{chat.text}}</p>
+<p class="font-semibold text-xl text-gray-400">{{chat.sent_at}}</p>
+<p class="font-semibold text-xl text-gray-400">From: {{chat.sent_from}}</p>
+<p class="font-semibold text-xl text-gray-400">To: {{chat.sent_to}}</p>
+<br />
+{% endfor %} {% endblock %}

@@ -1,0 +1,13 @@
+{% extends "base.html" %} {% block main %}
+<p class="font-bold text-red-500 text-3xl">User: {{chats.sent_from}}</p>
+<form action="" method="post" class="m-6">
+  {{form.as_p}} {% csrf_token %}
+  <br />
+  <button
+    type="submit"
+    class="py-2 px-6 rounded-lg bg-blue-500 text-white font-bold hover:bg-blue-700"
+  >
+    Send
+  </button>
+</form>
+{% endblock %}
