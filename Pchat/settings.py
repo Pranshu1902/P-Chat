@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_filters',
     'rest_framework_swagger',
+    'drf_spectacular',
+    'drf_spectacular_sidecar',
     'chats',
 ]
 
@@ -131,4 +133,19 @@ LOGIN_URL = "/login"
 LOGOUT_REDIRECT_URL = "/login"
 LOGIN_SUCCESS_URL = "/send"
 
-REST_FRAMEWORK = { 'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema' }
+REST_FRAMEWORK = { 'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema' }
+
+SPECTACULAR_SETTINGS = {
+    'SWAGGER_UI_DIST': 'SIDECAR',  # shorthand to use the sidecar instead
+    'SWAGGER_UI_FAVICON_HREF': 'SIDECAR',
+    'REDOC_DIST': 'SIDECAR',
+    # OTHER SETTINGS
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'P-Chat API',
+    'DESCRIPTION': 'Chat with anyone like never before',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    # OTHER SETTINGS
+}

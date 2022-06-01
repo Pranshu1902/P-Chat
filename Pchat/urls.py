@@ -32,7 +32,10 @@ router.register("chats", APIChatViewSet, basename="chats")
 from rest_framework_swagger.views import get_swagger_view
 schema_view = get_swagger_view(title='P-Chat API')
 
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
+
 urlpatterns = [
+    # others
     path('admin/', admin.site.urls),
     path("send/", CreateChat.as_view()),
     path("view/", ViewChat.as_view()),
@@ -42,6 +45,10 @@ urlpatterns = [
     path("chat_list/", ViewSentChatList.as_view()),
     path("chat/<pk>", ViewPersonalChats.as_view()),
     #path("api", ChatListAPI.as_view()),
-    path("mainapi/", include(router.urls)),
-    re_path(r'^$', schema_view),
+    path("api/", include(router.urls)),
+    # re_path(r'^$', schema_view),
+    # swagger
+    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+    path('api/schema/swagger/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+
 ]# + router.urls
