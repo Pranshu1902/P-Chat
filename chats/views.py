@@ -75,5 +75,13 @@ class ViewPersonalChats(LoginRequiredMixin, ListView):
     context_object_name = "chats"
 
     def get_queryset(self):
-        allSent = Chat.objects.filter(sent_from=self.request.user)
-        return allSent.filter(sent_to__id=self.request.resolver_match.kwargs['pk'])
+        receiver = User.objects.filter(id = self.request.resolver_match.kwargs['pk'])
+        print(Chat.objects.filter(sent_from=self.request.user, sent_to__id__in = receiver.all()))
+        return Chat.objects.filter(sent_from=self.request.user, sent_to__id__in = receiver.all())#, sent_to = receiver)#, sent_to__id=self.request.resolver_match.kwargs['pk'])
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        receiver = User.objects.filter(id = self.request.resolver_match.kwargs['pk'])
+        received = Chat.objects.filter(sent_from__id__in=receiver.all(), sent_to = self.request.user)
+        context["received"] = received
+        return context

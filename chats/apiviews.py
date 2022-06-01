@@ -18,7 +18,7 @@ class TaskSerializer(ModelSerializer):
 
     class Meta:
         model = Chat
-        fields = ["text"]
+        fields = ["id", "text", "sent_from", "sent_to"]
 
 
 class ChatViewSet(LoginRequiredMixin, ModelViewSet):
@@ -39,5 +39,5 @@ class ChatListAPI(View):
         chats = Chat.objects.all()
         data = []
         for chat in chats:
-            data.append({"Chat": chat.text})
+            data.append({"id": chat.id, "Chat": chat.text, "sent_from": chat.sent_from, "sent_to": chat.sent_to.username})
         return JsonResponse({"Pchat": data})
