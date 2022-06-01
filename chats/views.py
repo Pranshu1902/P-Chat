@@ -9,6 +9,19 @@ from django.contrib.auth.views import LoginView
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
+# API
+from rest_framework import viewsets
+from chats.serializer import *
+
+class APIChatViewSet(viewsets.ModelViewSet):
+    queryset = Chat.objects.all()
+    serializer_class = ChatSerializer
+
+# API Swagger
+#from rest_framework_swagger.views import get_swagger_view
+#schema_view = get_swagger_view(title='Pastebin API')
+
+
 # Create your views here.
 
 class AuthorizedUser(LoginRequiredMixin):

@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'django_filters',
+    'rest_framework_swagger',
     'chats',
 ]
 
@@ -129,3 +130,5 @@ LOGIN_REDIRECT_URL = "/send"
 LOGIN_URL = "/login"
 LOGOUT_REDIRECT_URL = "/login"
 LOGIN_SUCCESS_URL = "/send"
+
+REST_FRAMEWORK = { 'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema' }
