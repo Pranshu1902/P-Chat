@@ -17,6 +17,10 @@ class APIChatViewSet(viewsets.ModelViewSet):
     queryset = Chat.objects.all()
     serializer_class = ChatSerializer
 
+class APIUserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
 # API Swagger
 #from rest_framework_swagger.views import get_swagger_view
 #schema_view = get_swagger_view(title='Pastebin API')

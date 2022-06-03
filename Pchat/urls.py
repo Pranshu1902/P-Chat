@@ -26,6 +26,7 @@ router = SimpleRouter(trailing_slash=True)
 
 router.register("api", ChatViewSet, basename="chats")
 router.register("chats", APIChatViewSet, basename="chats")
+router.register("user", APIUserViewSet, basename="user")
 
 # swagger
 #from django.conf.urls import url
