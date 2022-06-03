@@ -1,11 +1,31 @@
 {% extends "base.html" %} {% block head %} Login {% endblock %} {% block main %}
-<form action="" method="post" class="m-6">
-  {{form.as_p}} {% csrf_token %}
-  <button
-    type="submit"
-    class="font-bold text-white bg-blue-500 hover:bg-blue-700 rounded-lg py-2 px-6"
+<div class="w-full h-full bg-purple-100">
+  <div>
+    <p
+      class="h-1/4 text-7xl font-bold flex justify-center items-center hover:animate-ping text-green-400"
+    >
+      P-Chat
+    </p>
+  </div>
+  <form
+    action=""
+    method="post"
+    class="font-bold rounded-lg flex flex-col space-y-8 text-xl mt-24 justify-center items-center"
   >
-    Login
-  </button>
-</form>
+    {{form.as_p}} {% csrf_token %}
+    <button
+      type="submit"
+      class="font-bold text-white bg-blue-500 hover:bg-blue-700 rounded-lg py-2 px-6"
+    >
+      Login
+    </button>
+  </form>
+  <p class="flex flex-row justify-center items-center">
+    New User?<a
+      href="/signup"
+      class="font-bold text-blue-500 hover:text-blue-700"
+      >Sign up</a
+    >
+  </p>
+</div>
 {% endblock %}

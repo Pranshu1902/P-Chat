@@ -28,6 +28,11 @@ class APIUserViewSet(viewsets.ModelViewSet):
 
 # Create your views here.
 
+def redirectLoggedinUser(request):
+    if request.user.is_authenticated():
+        return HttpResponseRedirect("/home")
+
+
 class AuthorizedUser(LoginRequiredMixin):
     def get_queryset(self):
         return Chat.objects.filter(sent_from=self.request.user)
@@ -46,10 +51,15 @@ class UserSignupView(CreateView):
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
+class HomeView(CreateView):
+    form_class = UserCreationForm
+    template_name = "home.html"
+    #success_url = "/send"
+
 class ChatForm(ModelForm):
     class Meta:
         model = Chat
-        fields = ['text', 'sent_to']
+        fields = ['sent_to', 'text']
 
 class CreateChat(LoginRequiredMixin, CreateView):
     form_class = ChatForm
@@ -75,8 +85,19 @@ class ViewChat(LoginRequiredMixin, ListView):
     template_name = 'view_chat.html'
     context_object_name = "chats"
 
+    # function to get the current user's details
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.request.user
+        context["sender"] = user
+        return context
+
     def get_queryset(self):
-        return Chat.objects.filter(sent_from=self.request.user)# | sent_to = self.request.user)
+        received = list(Chat.objects.filter(sent_to=self.request.user))
+        sent = list(Chat.objects.filter(sent_from=self.request.user))
+        received.extend(sent)
+        return received
+        # return Chat.objects.filter(sent_from=self.request.user)# | sent_to = self.request.user)
 
 class ViewSentChatList(LoginRequiredMixin, ListView):
     queryset = Chat.objects.all()
@@ -93,12 +114,16 @@ class ViewPersonalChats(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         receiver = User.objects.filter(id = self.request.resolver_match.kwargs['pk'])
-        print(Chat.objects.filter(sent_from=self.request.user, sent_to__id__in = receiver.all()))
-        return Chat.objects.filter(sent_from=self.request.user, sent_to__id__in = receiver.all())#, sent_to = receiver)#, sent_to__id=self.request.resolver_match.kwargs['pk'])
+        sent = list(Chat.objects.filter(sent_from=self.request.user, sent_to__id__in = receiver.all()))
+        received = list(Chat.objects.filter(sent_from__id__in=receiver.all(), sent_to = self.request.user))
+        sent.extend(received)
+        return sent# Chat.objects.filter(sent_from=self.request.user, sent_to__id__in = receiver.all())
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         receiver = User.objects.filter(id = self.request.resolver_match.kwargs['pk'])
         received = Chat.objects.filter(sent_from__id__in=receiver.all(), sent_to = self.request.user)
         context["received"] = received
+        user = self.request.user
+        context["sender"] = user
         return context
