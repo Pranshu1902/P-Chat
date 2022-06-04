@@ -1,8 +1,9 @@
-{% extends "base.html" %} {% block head %} View {% endblock %} {% block main %}
+{% extends "base.html" %} {% block head %} {{sender}} | Chats {% endblock %} {% block main %}
 
-<div>
+<!-- <div class="from-indigo-500 via-purple-500 to-pink-500"> -->
+<div class="bg-gradient-to-r from-purple-500 to-pink-500 h-full"> 
   <!-- This example requires Tailwind CSS v2.0+ -->
-  <div>
+  <div class="fixed w-full">
     <nav class="bg-gray-800">
       <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
         <div class="relative flex items-center justify-between h-16">
@@ -65,26 +66,34 @@
             class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start"
           >
             <div class="flex-shrink-0 flex items-center">
-              <p class="font-bold text-white md:text-xl text-3xl">P-Chat</p>
+              <a href="/"
+              ><p class="font-bold text-transparent bg-clip-text bg-gradient-to-tl from-pink-500 via-red-500 to-yellow-500 md:text-xl text-5xl">P-Chat</p></a
+            >
             </div>
             <div class="hidden sm:block sm:ml-6">
               <div class="flex space-x-4">
                 <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
                 <a
                   href="/send"
-                  class="text-white px-3 py-2 rounded-md text-sm font-medium"
+                  class="text-gray-300 px-3 py-2 rounded-md text-sm font-medium"
                   aria-current="page"
                   >Send</a
                 >
                 <a
                   href="/view"
-                  class="bg-gray-900 text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                  class="bg-gray-900 text-white hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                   >View</a
                 >
                 <a
                   href="/api/api/"
+                  target="_blank"
                   class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                   >API</a
+                >
+                <a
+                  href="/about"
+                  class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                  >About</a
                 >
                 <a
                   href="/logout"
@@ -101,7 +110,7 @@
               type="button"
               class="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
             >
-              <p><i class="fa fa-user"></i> {{sender}}</p>
+              <p class="text-white"><i class="fa fa-user"></i> {{sender}}</p>
             </button>
           </div>
         </div>
@@ -137,13 +146,13 @@
     </nav>
   </div>
 
-  <div class="m-12">
+  <div class="p-24 flex flex-col justify-center items-center space-y-2">
     {% for chat in chats %}
     <a
-      href="/chat/{{chat.sent_from.id}}"
-      class="flex items-center space-x-4 rounded-lg bg-blue-300 w-1/3 py-2"
+      href="/chat/{{chat.sent_to.id}}"
+      class="shadow-xl flex items-center space-x-4 rounded-lg bg-blue-200 w-3/4 py-2"
     >
-      <p class="pl-2 font-bold text-xl">{{chat.sent_to}}</p>
+      <p class="pl-2 font-bold text-2xl">{{chat.sent_to}}</p>
       <p class="truncate">{{chat.text}}</p>
       &nbsp;
       <p>{{chat.prettier_date}}</p>

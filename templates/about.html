@@ -1,0 +1,205 @@
+{% extends "base.html" %} {% block head %} P-Chat | About Us {% endblock %} {% block main %}
+<div class="bg-gradient-to-r from-purple-500 to-pink-500 h-full">
+  <!-- This example requires Tailwind CSS v2.0+ -->
+  <nav class="bg-gray-800">
+    <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+      <div class="relative flex items-center justify-between h-16">
+        <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
+          <!-- Mobile menu button-->
+          <button
+            type="button"
+            class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+            aria-controls="mobile-menu"
+            aria-expanded="false"
+          >
+            <span class="sr-only">Open main menu</span>
+            <!--
+            Icon when menu is closed.
+
+            Heroicon name: outline/menu
+
+            Menu open: "hidden", Menu closed: "block"
+          -->
+            <svg
+              class="block h-6 w-6"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="2"
+              stroke="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
+            <!--
+            Icon when menu is open.
+
+            Heroicon name: outline/x
+
+            Menu open: "block", Menu closed: "hidden"
+          -->
+            <svg
+              class="hidden h-6 w-6"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="2"
+              stroke="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
+        <div
+          class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start"
+        >
+          <div class="flex-shrink-0 flex items-center">
+            <a href="/"
+              ><p
+                class="font-bold text-transparent bg-clip-text bg-gradient-to-tl from-pink-500 via-red-500 to-yellow-500 md:text-xl text-5xl"
+              >
+                P-Chat
+              </p></a
+            >
+          </div>
+          <div class="hidden sm:block sm:ml-6">
+            <div class="flex space-x-4">
+              <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+              <a
+                href="/send"
+                class="text-gray-300 px-3 py-2 rounded-md text-sm font-medium"
+                aria-current="page"
+                >Send</a
+              >
+              <a
+                href="/view"
+                class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                >View</a
+              >
+              <a
+                href="/api/api"
+                class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                >API</a
+              >
+              <a
+                href="/about"
+                class="bg-gray-900 text-white hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                >About</a
+              >
+              <a
+                href="/logout"
+                class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                >Logout</a
+              >
+            </div>
+          </div>
+        </div>
+        <div
+          class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0"
+        >
+          <button
+            type="button"
+            class="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+          >
+            <p class="text-white"><i class="fa fa-user"></i> {{sender}}</p>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile menu, show/hide based on menu state. -->
+    <div class="sm:hidden" id="mobile-menu">
+      <div class="px-2 pt-2 pb-3 space-y-1">
+        <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+        <a
+          href="/send"
+          class="bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium"
+          aria-current="page"
+          >Send</a
+        >
+        <a
+          href="/view"
+          class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+          >View</a
+        >
+        <a
+          href="/api/api/"
+          target="_blank"
+          class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+          >API</a
+        >
+        <a
+          href="/about"
+          class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+          >About</a
+        >
+        <a
+          href="/logout"
+          class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+          >Logout</a
+        >
+      </div>
+    </div>
+  </nav>
+
+  <div class="mt-4 ml-4 mr-4">
+    <h1 class="font-bold text-8xl text-transparent bg-clip-text bg-gradient-to-tl from-pink-600 via-red-600 to-yellow-500">Founder</h1>
+    <div class="flex flex-col space-y-8">
+      <div class="flex pt-12 pl-6">
+        <img
+          src="https://github.com/Pranshu1902.png"
+          class="w-1/5 h-1/5 rounded-full"
+          alt=""
+        />
+        <div>
+          <div class="flex flex-col pl-12">
+            <p class="pb-4 font-bold flex text-6xl text-transparent bg-clip-text bg-gradient-to-tl bg-gradient-to-tl from-yellow-400 to-green-300">Pranshu Aggarwal</p>
+          </div>
+          <br />
+          <div class="flex flex-col pl-12">
+            <div class="flex space-x-4">
+              <span class=""
+                ><a target="_blank" href="https://github.com/Pranshu1902" class="text-5xl"
+                  ><i
+                    class="hover:fill-green-300 fa fa-github hover:text-green-300"
+                  ></i></a
+              ></span>
+              <span class=""
+                ><a target="_blank" href="https://twitter.com/pranshu1902" class="text-5xl"
+                  ><i
+                    class="hover:fill-green-300 fa fa-twitter hover:text-green-300"
+                  ></i></a
+              ></span>
+              <span class=""
+                ><a target="_blank"
+                  href="https://www.linkedin.com/in/pranshu-aggarwal-4aa8181b4/"
+                  class="text-5xl"
+                  ><i
+                    class="hover:fill-green-300 fa fa-linkedin hover:text-green-300"
+                  ></i></a
+              ></span>
+            </div>
+            <div>
+              <p class="pt-4 font-bold text-2xl text-gray-800">
+                Pranshu is a tech enthusiast and a self-taught programmer. He is
+                a full stack developer with a passion for learning and building
+                things to make the lives of people better. He also love to read
+                books. Feel free to connect!
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

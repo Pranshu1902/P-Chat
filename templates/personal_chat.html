@@ -1,7 +1,7 @@
-{% extends "base.html" %} {% block head %} View {% endblock %} {% block main %}
-<div class="w-full">
+{% extends "base.html" %} {% block head %} {{contact}} | View Chat {% endblock %} {% block main %}
+<div class="bg-gradient-to-br from-pink-500 via-red-500 to-yellow-500 w-full h-full">
   <!-- This example requires Tailwind CSS v2.0+ -->
-  <nav class="bg-gray-800">
+  <nav class="bg-gray-800 fixed w-full">
     <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
       <div class="relative flex items-center justify-between h-16">
         <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -63,26 +63,33 @@
           class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start"
         >
           <div class="flex-shrink-0 flex items-center">
-            <p class="font-bold text-white md:text-xl text-3xl">P-Chat</p>
+            <a href="/"
+              ><p class="font-bold text-transparent bg-clip-text bg-gradient-to-tl from-pink-500 via-red-500 to-yellow-500 md:text-xl text-5xl">P-Chat</p></a
+            >
           </div>
           <div class="hidden sm:block sm:ml-6">
             <div class="flex space-x-4">
-              <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
               <a
                 href="/send"
-                class="text-white px-3 py-2 rounded-md text-sm font-medium"
+                class="text-gray-300 hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium"
                 aria-current="page"
                 >Send</a
               >
               <a
                 href="/view"
-                class="bg-gray-900 text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                class="text-white bg-gray-900 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                 >View</a
               >
               <a
                 href="/api/api/"
+                target="_blank"
                 class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                 >API</a
+              >
+              <a
+                href="/about"
+                class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                >About</a
               >
               <a
                 href="/logout"
@@ -97,9 +104,9 @@
         >
           <button
             type="button"
-            class="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+            class="bg-gray-800 p-1 rounded-full text-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
           >
-            <p><i class="fa fa-user"></i> {{sender}}</p>
+            <p class="text-white hover:scale-150 hover:text-blue-500"><i class="fa fa-user"></i> {{sender}}</p>
           </button>
         </div>
       </div>
@@ -134,17 +141,18 @@
     </div>
   </nav>
 
-  <div class="ml-24 mr-24">
-    <div class="float-left w-full space-y-16">
-      {% for chat in chats %} {% if forloop.counter > 1 %} {% else %}
-      <p class="w-full">
-        {{chat.sent_to.username == sender.username ? chat.sent_from.username :
-        sender.username}}
-      </p>
-      {% endif %} {% if chat.sent_from.username == sender.username %}
-      <div class="w-full">
+  <div class="fixed w-full mt-16 bg-gradient-to-r from-cyan-500 to-blue-500 shadow-xl">
+    <p class="w-full text-white py-2 font-bold text-3xl pl-12">
+      <a href="/view">&larr;</a> {{contact}}
+    </p>
+  </div>
+  <div class="">
+    <div class="float-left w-full space-y-8 flex flex-col mt-36">
+      {% for chat in chats %}
+      {% if chat.sent_from.username == sender.username %}
+      <div class="w-full pr-24">
         <div
-          class="w-2/5 float-right font-semibold text-xl rounded-lg bg-green-200 py-2"
+          class="shadow-xl w-2/5 float-right font-semibold text-xl rounded-lg bg-green-200 py-2"
         >
           <div class="m-2">
             <p>{{chat.text}}</p>
@@ -155,9 +163,9 @@
         </div>
       </div>
       {% else %}
-      <div class="w-full">
+      <div class="w-full pl-24">
         <div
-          class="w-2/5 float-left font-semibold text-xl rounded-lg bg-yellow-100 py-2"
+          class="shadow-xl w-2/5 float-left font-semibold text-xl rounded-lg bg-yellow-100 py-2"
         >
           <div class="m-2">
             <p>{{chat.text}}</p>
@@ -167,10 +175,9 @@
           </div>
         </div>
       </div>
-      {% endif %}
+      {% endif %} {% endfor %}
       <br />
-      {% endfor %}
     </div>
   </div>
-  {% endblock %}
 </div>
+{% endblock %}

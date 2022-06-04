@@ -9,6 +9,8 @@ from django.contrib.auth.views import LoginView
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
+from django.db.models import Q 
+
 # API
 from rest_framework import viewsets
 from chats.serializer import *
@@ -56,6 +58,16 @@ class HomeView(CreateView):
     template_name = "home.html"
     #success_url = "/send"
 
+class AboutView(CreateView):
+    form_class = UserCreationForm
+    template_name = "about.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.request.user
+        context["sender"] = user
+        return context
+
 class ChatForm(ModelForm):
     class Meta:
         model = Chat
@@ -96,7 +108,8 @@ class ViewChat(LoginRequiredMixin, ListView):
         received = list(Chat.objects.filter(sent_to=self.request.user))
         sent = list(Chat.objects.filter(sent_from=self.request.user))
         received.extend(sent)
-        return received
+        all = Chat.objects.filter(Q(sent_to = self.request.user) | Q(sent_from = self.request.user)).distinct()
+        return all
         # return Chat.objects.filter(sent_from=self.request.user)# | sent_to = self.request.user)
 
 class ViewSentChatList(LoginRequiredMixin, ListView):
@@ -114,16 +127,16 @@ class ViewPersonalChats(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         receiver = User.objects.filter(id = self.request.resolver_match.kwargs['pk'])
-        sent = list(Chat.objects.filter(sent_from=self.request.user, sent_to__id__in = receiver.all()))
-        received = list(Chat.objects.filter(sent_from__id__in=receiver.all(), sent_to = self.request.user))
-        sent.extend(received)
-        return sent# Chat.objects.filter(sent_from=self.request.user, sent_to__id__in = receiver.all())
+        all_chats = Chat.objects.filter(Q(sent_from=self.request.user, sent_to__id__in = receiver.all()) | Q(sent_from__id__in=receiver.all(), sent_to = self.request.user)).order_by("sent_at")
+        # filter(sent | recieved)
+        return all_chats
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         receiver = User.objects.filter(id = self.request.resolver_match.kwargs['pk'])
         received = Chat.objects.filter(sent_from__id__in=receiver.all(), sent_to = self.request.user)
         context["received"] = received
+        context["contact"] = receiver[0]
         user = self.request.user
         context["sender"] = user
         return context

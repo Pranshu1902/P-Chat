@@ -38,13 +38,14 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 urlpatterns = [
     # others
     path('admin/', admin.site.urls),
+    path("about/", AboutView.as_view()),
     path("send/", CreateChat.as_view()),
     path("view/", ViewChat.as_view()),
     path("login/", UserLoginView.as_view()),
     #path('login/', redirectLoggedinUser),
     path("logout/", LogoutView.as_view()),
     path("signup/", UserSignupView.as_view()),
-    path("chat_list/", ViewSentChatList.as_view()),
+    #path("chat_list/", ViewSentChatList.as_view()),
     path("chat/<pk>", ViewPersonalChats.as_view()),
     #path("api", ChatListAPI.as_view()),
     path("api/", include(router.urls)),
