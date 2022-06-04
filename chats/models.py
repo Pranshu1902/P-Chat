@@ -10,4 +10,4 @@ class Chat(models.Model):
     sent_to = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
 
     def prettier_date(self):
-        return self.sent_at.strftime("%d %b %-I:%M %p")
+        return self.sent_at.strftime("%d %b %H:%M %p")
