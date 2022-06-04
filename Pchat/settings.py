@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-r9)@rqp@4y3cfz9ir*&&ge%)6ow%d)x2sdlxl^2hh7indd$!bh
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["p-chat-pranshu1902.herokuapp.com"]
 
 
 # Application definition
@@ -149,3 +149,8 @@ SPECTACULAR_SETTINGS = {
     'SERVE_INCLUDE_SCHEMA': False,
     # OTHER SETTINGS
 }
+
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
+import django_heroku
+django_heroku.settings(locals())
