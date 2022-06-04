@@ -2,6 +2,11 @@
   alt="Azure DevOps coverage"
   src="https://img.shields.io/badge/framework-Django-brightgreen"
 />
+<img
+  alt="Azure DevOps coverage"
+  src="https://img.shields.io/badge/API-Rest-orange"
+/>
+
 # P-Chat
 
 Chat like never before
