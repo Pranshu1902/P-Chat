@@ -150,12 +150,13 @@
     {% for chat in chats %}
     <a
       href="/chat/{{chat.sent_to.id}}"
-      class="shadow-xl flex items-center space-x-4 rounded-lg bg-blue-200 w-3/4 py-2"
+      class="shadow-xl rounded-lg bg-blue-200 w-3/4 py-2 p-4"
     >
-      <p class="pl-2 font-bold text-2xl">{{chat.sent_to}}</p>
-      <p class="truncate">{{chat.text}}</p>
-      &nbsp;
-      <p>{{chat.prettier_date}}</p>
+    <div class="flex items-center w-full">
+      <p class="w-1/5 pl-2 font-bold text-2xl text-transparent bg-clip-text bg-gradient-to-tl bg-gradient-to-br from-yellow-500 via-red-500 to-green-600">{{chat.sent_to}}</p>
+      <p class="w-3/5 font-bold truncate">{{chat.text}}</p>
+      <p class="flex font-bold w-1/5">{{chat.prettier_date}}</p>
+    </div>
     </a>
     <br />
     {% endfor %}
