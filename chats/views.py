@@ -105,12 +105,24 @@ class ViewChat(LoginRequiredMixin, ListView):
         return context
 
     def get_queryset(self):
-        received = list(Chat.objects.filter(sent_to=self.request.user))
-        sent = list(Chat.objects.filter(sent_from=self.request.user))
-        received.extend(sent)
-        all = Chat.objects.filter(Q(sent_to = self.request.user) | Q(sent_from = self.request.user)).distinct()
-        return all
-        # return Chat.objects.filter(sent_from=self.request.user)# | sent_to = self.request.user)
+        master = []
+        for user in User.objects.all():
+            #if user.id != self.request.user.id:
+            chat = Chat.objects.filter(Q(sent_to = self.request.user, sent_from=user) | Q(sent_from = self.request.user, sent_to=user)).order_by("sent_at")
+            count = chat.count()
+            if count!=0:
+                if len(master) == 0:
+                    master.append(chat[count-1])
+                else:
+                    # finding the correct spot in sorted way
+                    for i in range(len(master)):
+                        if chat[count-1].sent_at <= master[i].sent_at:
+                            master.insert(i+1, chat[count-1])
+                            break
+                    else:
+                        master.insert(0, chat[count-1])
+
+        return master
 
 class ViewSentChatList(LoginRequiredMixin, ListView):
     queryset = Chat.objects.all()
