@@ -11,6 +11,8 @@
 
 Chat like never before
 
+Live at: http://p-chat-pranshu1902.herokuapp.com/
+
 A free and open-source chatting site to connect with your friends.
 
 Built using Django.
